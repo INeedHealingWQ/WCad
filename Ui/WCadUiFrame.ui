@@ -27,10 +27,22 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string>GroupBox</string>
+    <item row="0" column="1" rowspan="2">
+     <widget class="WGraphicsView" name="graphicsView">
+      <property name="backgroundBrush">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </property>
+      <property name="dragMode">
+       <enum>QGraphicsView::NoDrag</enum>
+      </property>
+      <property name="resizeAnchor">
+       <enum>QGraphicsView::NoAnchor</enum>
       </property>
      </widget>
     </item>
@@ -41,62 +53,23 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="2">
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>GroupBox</string>
       </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
+      <widget class="QPushButton" name="poly_line_btn">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>662</width>
-         <height>522</height>
+         <x>10</x>
+         <y>30</y>
+         <width>71</width>
+         <height>28</height>
         </rect>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
+       <property name="text">
+        <string>PolyLine</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QWidget
-{
-background-color:black;
-}</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QCadDrawArea" name="widget" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>500</width>
-            <height>500</height>
-           </size>
-          </property>
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </widget>
      </widget>
     </item>
@@ -122,10 +95,9 @@ background-color:black;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QCadDrawArea</class>
-   <extends>QWidget</extends>
-   <header>qcaddrawarea.h</header>
-   <container>1</container>
+   <class>WGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>wgraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
