@@ -2,10 +2,9 @@
 
 # Form implementation generated from reading ui file 'WCadUiFrame.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -40,14 +39,21 @@ class Ui_MainWindow(object):
         self.groupBox_2.setObjectName("groupBox_2")
         self.gridLayout.addWidget(self.groupBox_2, 1, 0, 1, 1)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
+        self.groupBox.setCheckable(False)
         self.groupBox.setObjectName("groupBox")
         self.poly_line_btn = QtWidgets.QPushButton(self.groupBox)
+        self.poly_line_btn.setEnabled(True)
         self.poly_line_btn.setGeometry(QtCore.QRect(10, 30, 71, 28))
+        self.poly_line_btn.setCheckable(False)
+        self.poly_line_btn.setAutoRepeat(False)
+        self.poly_line_btn.setAutoDefault(False)
+        self.poly_line_btn.setDefault(False)
+        self.poly_line_btn.setFlat(False)
         self.poly_line_btn.setObjectName("poly_line_btn")
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 22))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -68,4 +74,6 @@ class Ui_MainWindow(object):
         self.groupBox_2.setTitle(_translate("MainWindow", "GroupBox"))
         self.groupBox.setTitle(_translate("MainWindow", "GroupBox"))
         self.poly_line_btn.setText(_translate("MainWindow", "PolyLine"))
+
+
 from wgraphicsview.WGraphicsView import WGraphicsView

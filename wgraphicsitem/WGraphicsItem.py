@@ -13,6 +13,7 @@ class WGLine(QtWidgets.QGraphicsPathItem):
         self.bound = self.wline.w_bounding_rect()
         self.setFlag(QtWidgets.QGraphicsPathItem.ItemIsMovable)
         self.setPath(self.wline)
+
 #    def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent') -> None:
 #        print('mouse pressed on item')
 
