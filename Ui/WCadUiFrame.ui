@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>802</width>
-    <height>593</height>
+    <width>924</width>
+    <height>826</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,8 +27,83 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1" rowspan="2">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>160</width>
+        <height>250</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>250</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>工具</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <widget class="QPushButton" name="line_btn">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>71</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>直线</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="circle_btn">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>71</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>圆</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="3">
      <widget class="WGraphicsView" name="graphicsView">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      </property>
       <property name="backgroundBrush">
        <brush brushstyle="NoBrush">
         <color alpha="255">
@@ -47,50 +122,168 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="title">
-       <string>GroupBox</string>
+     <widget class="WStackedWidget" name="stackedWidget">
+      <property name="minimumSize">
+       <size>
+        <width>160</width>
+        <height>250</height>
+       </size>
       </property>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>250</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="line_page">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>151</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>直线参数</string>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>147</width>
+           <height>57</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>长度</string>
+            </property>
+            <property name="buddy">
+             <cstring>doubleSpinBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>角度</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="circle_page">
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>151</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>圆参数</string>
+        </property>
+        <widget class="QWidget" name="">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>147</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>半径</string>
+            </property>
+            <property name="buddy">
+             <cstring>doubleSpinBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox">
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="groupBox_4">
       <property name="title">
-       <string>GroupBox</string>
+       <string>信息</string>
       </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <widget class="QPushButton" name="poly_line_btn">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QWidget" name="">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>0</x>
          <y>30</y>
-         <width>71</width>
-         <height>28</height>
+         <width>153</width>
+         <height>17</height>
         </rect>
        </property>
-       <property name="text">
-        <string>PolyLine</string>
-       </property>
-       <property name="checkable">
-        <bool>false</bool>
-       </property>
-       <property name="autoRepeat">
-        <bool>false</bool>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_info_pos_prompt">
+          <property name="text">
+           <string>位置：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_info_pos">
+          <property name="text">
+           <string>0， 0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -101,8 +294,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>802</width>
-     <height>22</height>
+     <width>924</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -119,8 +312,87 @@
    <class>WGraphicsView</class>
    <extends>QGraphicsView</extends>
    <header>wgraphicsview.h</header>
+   <slots>
+    <slot>create_w_line()</slot>
+    <slot>create_w_circle()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>WStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>wstackedwidget.h</header>
+   <container>1</container>
+   <slots>
+    <slot>set_index_to_line()</slot>
+    <slot>set_index_to_circle()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>line_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>graphicsView</receiver>
+   <slot>create_w_line()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>244</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>line_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>stackedWidget</receiver>
+   <slot>set_index_to_line()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>122</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>circle_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>stackedWidget</receiver>
+   <slot>set_index_to_circle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>29</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>circle_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>graphicsView</receiver>
+   <slot>create_w_circle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
