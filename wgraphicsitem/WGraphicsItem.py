@@ -2,7 +2,8 @@ import typing
 from PyQt5 import QtGui
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QStyleOptionGraphicsItem, QGraphicsItem, QGraphicsSceneMouseEvent, QToolTip
+from PyQt5.QtWidgets import QWidget, QStyleOptionGraphicsItem, QGraphicsItem, QGraphicsSceneMouseEvent, QToolTip, \
+    QGraphicsSceneHoverEvent
 from wpath import WPath
 from wtypes import WToolTypes
 
@@ -63,21 +64,24 @@ class WGPromptCircle(WGPathItem):
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         tool = self.scene().current_tool
-        if tool is not None and tool.tool_type == WToolTypes.WToolTypes.LINE:
-            self.setOpacity(1)
-            pos = event.screenPos()
-            QToolTip.showText(QtCore.QPoint(int(pos.x()), int(pos.y())), self.tip)
+        if tool is not None:
+            if tool.tool_type in [WToolTypes.WToolTypes.LINE, WToolTypes.WToolTypes.RULER_LENGTH]:
+                self.setOpacity(1)
+                pos = event.screenPos()
+                QToolTip.showText(QtCore.QPoint(int(pos.x()), int(pos.y())), self.tip)
         super(WGPromptCircle, self).hoverEnterEvent(event)
 
     def hoverLeaveEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.setOpacity(0.001)
+        QToolTip.hideText()
         super(WGPromptCircle, self).hoverLeaveEvent(event)
 
     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent') -> None:
         if event.button() == QtCore.Qt.LeftButton:
             tool = self.scene().current_tool
-            if tool is not None and tool.tool_type == WToolTypes.WToolTypes.LINE:
-                tool.prompt_point = self.__pos
+            if tool is not None:
+                if tool.tool_type in [WToolTypes.WToolTypes.LINE, WToolTypes.WToolTypes.RULER_LENGTH]:
+                    tool.prompt_point = self.__pos
         super(WGPromptCircle, self).mousePressEvent(event)
 
 
@@ -122,9 +126,9 @@ class WGLine(WGPathItem):
         start = self.w_line.start_point
         end = self.w_line.end_point
         mid = self.w_line.mid_point
-        self.start_prompt_item = WGPromptCircle(start, self.prompt_circle_r, 'End')
-        self.end_prompt_item = WGPromptCircle(end, self.prompt_circle_r, 'End')
-        self.mid_prompt_item = WGPromptCircle(mid, self.prompt_circle_r, 'Middle')
+        self.start_prompt_item = WGPromptCircle(start, self.prompt_circle_r, '端点')
+        self.end_prompt_item = WGPromptCircle(end, self.prompt_circle_r, '端点')
+        self.mid_prompt_item = WGPromptCircle(mid, self.prompt_circle_r, '中点')
         self.start_prompt_item.setParentItem(self)
         self.end_prompt_item.setParentItem(self)
         self.mid_prompt_item.setParentItem(self)

@@ -2,11 +2,11 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication
 from wgraphicsview.WGraphicsScene import WGraphicsScene
-from wtoolobj.WToolObj import WToolLine, WToolCircle
-
+from wtoolobj.WToolObj import WToolLine, WToolCircle, WToolRulerLength
+from Ui.WCadUiFrame import Ui_MainWindow
 
 class WGraphicsView(QtWidgets.QGraphicsView):
-    def __init__(self, parent: QtWidgets.QWidget, ui: QtCore.QObject):
+    def __init__(self, parent: QtWidgets.QWidget, ui: Ui_MainWindow):
         super().__init__()
         self.setParent(parent)
         self.ui = ui
@@ -28,7 +28,7 @@ class WGraphicsView(QtWidgets.QGraphicsView):
     def create_w_line(self):
         if self.current_tool is not None:
             self.current_tool.drop()
-        self.current_tool = WToolLine(self, self.scene)
+        self.current_tool = WToolLine(self, self.scene, self.ui.line_para_length.value(), self.ui.line_para_angle.value())
         self.scene.current_tool = self.current_tool
 
     def create_w_circle(self):
@@ -36,6 +36,15 @@ class WGraphicsView(QtWidgets.QGraphicsView):
             self.current_tool.drop()
         self.current_tool = WToolCircle(self, self.scene)
         self.scene.current_tool = self.current_tool
+
+    def create_w_ruler_length(self):
+        if self.current_tool is not None:
+            self.current_tool.drop()
+        self.current_tool = WToolRulerLength(self, self.scene)
+        self.scene.current_tool = self.current_tool
+
+    def create_w_ruler_angle(self):
+        pass
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
         ret = super(WGraphicsView, self).mousePressEvent(event)
@@ -47,7 +56,6 @@ class WGraphicsView(QtWidgets.QGraphicsView):
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         ret = super(WGraphicsView, self).mouseMoveEvent(event)
         if self.current_tool is not None:
-            print(self.scene.sceneRect())
             self.current_tool.mouse_move_event_handler(event)
             self.check_done()
         pos = self.mapToScene(event.pos())

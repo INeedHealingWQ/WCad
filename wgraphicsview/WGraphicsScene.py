@@ -3,6 +3,7 @@ from PyQt5 import QtGui
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QGraphicsSceneDragDropEvent, QGraphicsSceneMouseEvent
 from wgraphicsitem import WGraphicsItem
+from wgraphicsitem.WGraphicsTextItem import WGraphicsTextItem
 
 
 class WGraphicsScene(QtWidgets.QGraphicsScene):

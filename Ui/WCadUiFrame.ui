@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>924</width>
-    <height>826</height>
+    <height>656</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,6 +19,18 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">  QMainWindow::separator {
+      background: yellow;
+      width: 10px; /* when vertical */
+      height: 10px; /* when horizontal */
+  }
+
+  QMainWindow::separator:hover {
+      background: red;
+  }
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -27,8 +39,8 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox">
+    <item row="1" column="0">
+     <widget class="WStackedWidget" name="stackedWidget">
       <property name="minimumSize">
        <size>
         <width>160</width>
@@ -41,55 +53,179 @@
         <height>250</height>
        </size>
       </property>
-      <property name="title">
-       <string>工具</string>
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <widget class="QPushButton" name="line_btn">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>71</width>
-         <height>28</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>直线</string>
-       </property>
-       <property name="checkable">
-        <bool>false</bool>
-       </property>
-       <property name="autoRepeat">
-        <bool>false</bool>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
+      <widget class="QWidget" name="line_page">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>161</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">  QGroupBox {
+      background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #E0E0E0, stop: 1 #FFFFFF);
+      border: 2px solid gray;
+      border-radius: 5px;
+      margin-top: 1ex; /* leave space at the top for the title */
+  }
+
+  QGroupBox::title {
+      subcontrol-origin: margin;
+      subcontrol-position: top center; /* position at the top center */
+      padding: 0 3px;
+      background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #FF0ECE, stop: 1 #FFFFFF);
+  }</string>
+        </property>
+        <property name="title">
+         <string>直线参数</string>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>153</width>
+           <height>70</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="styleSheet">
+             <string notr="true">  QFrame, QLabel, QToolTip {
+      border: 2px solid green;
+      border-radius: 4px;
+      padding: 2px;
+  }</string>
+            </property>
+            <property name="text">
+             <string>长度</string>
+            </property>
+            <property name="buddy">
+             <cstring>doubleSpinBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="line_para_length">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="minimum">
+             <double>-10000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="styleSheet">
+             <string notr="true">  QFrame, QLabel, QToolTip {
+      border: 2px solid green;
+      border-radius: 4px;
+      padding: 2px;
+  }</string>
+            </property>
+            <property name="text">
+             <string>角度</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="line_para_angle">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="minimum">
+             <double>-360.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>360.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
       </widget>
-      <widget class="QPushButton" name="circle_btn">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>71</width>
-         <height>28</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>圆</string>
-       </property>
+      <widget class="QWidget" name="circle_page">
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>151</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>圆参数</string>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>147</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>半径</string>
+            </property>
+            <property name="buddy">
+             <cstring>doubleSpinBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -121,8 +257,78 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="WStackedWidget" name="stackedWidget">
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="minimumSize">
+       <size>
+        <width>160</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">  QGroupBox {
+      background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #E0E0E0, stop: 1 #FFFFFF);
+      border: 2px solid gray;
+      border-radius: 5px;
+      margin-top: 1ex; /* leave space at the top for the title */
+  }
+
+  QGroupBox::title {
+      subcontrol-origin: margin;
+      subcontrol-position: top center; /* position at the top center */
+      padding: 0 3px;
+      background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #FF0ECE, stop: 1 #FFFFFF);
+  }</string>
+      </property>
+      <property name="title">
+       <string>信息</string>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>153</width>
+         <height>33</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_info_pos_prompt">
+          <property name="styleSheet">
+           <string notr="true">  QFrame, QLabel, QToolTip {
+      border: 2px solid green;
+      border-radius: 4px;
+      padding: 2px;
+  }</string>
+          </property>
+          <property name="text">
+           <string>位置：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_info_pos">
+          <property name="styleSheet">
+           <string notr="true">  QFrame, QLabel, QToolTip {
+      border: 2px solid green;
+      border-radius: 4px;
+      padding: 2px;
+  }</string>
+          </property>
+          <property name="text">
+           <string>0， 0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
       <property name="minimumSize">
        <size>
         <width>160</width>
@@ -135,155 +341,213 @@
         <height>250</height>
        </size>
       </property>
-      <property name="currentIndex">
-       <number>0</number>
+      <property name="styleSheet">
+       <string notr="true">  QGroupBox {
+      background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #E0E0E0, stop: 1 #FFFFFF);
+      border: 2px solid gray;
+      border-radius: 5px;
+      margin-top: 1ex; /* leave space at the top for the title */
+  }
+
+  QGroupBox::title {
+      subcontrol-origin: margin;
+      subcontrol-position: top center; /* position at the top center */
+      padding: 0 3px;
+      background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #FF0ECE, stop: 1 #FFFFFF);
+  }</string>
       </property>
-      <widget class="QWidget" name="line_page">
-       <widget class="QGroupBox" name="groupBox_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>151</width>
-          <height>231</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>直线参数</string>
-        </property>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>147</width>
-           <height>57</height>
-          </rect>
-         </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>长度</string>
-            </property>
-            <property name="buddy">
-             <cstring>doubleSpinBox</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>角度</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="circle_page">
-       <widget class="QGroupBox" name="groupBox_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>151</width>
-          <height>231</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>圆参数</string>
-        </property>
-        <widget class="QWidget" name="">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>147</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>半径</string>
-            </property>
-            <property name="buddy">
-             <cstring>doubleSpinBox</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </widget>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QGroupBox" name="groupBox_4">
       <property name="title">
-       <string>信息</string>
+       <string>工具</string>
       </property>
-      <widget class="QWidget" name="">
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <widget class="QPushButton" name="line_btn">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>30</y>
-         <width>153</width>
-         <height>17</height>
+         <width>84</width>
+         <height>28</height>
         </rect>
        </property>
-       <layout class="QFormLayout" name="formLayout_3">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_info_pos_prompt">
-          <property name="text">
-           <string>位置：</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_info_pos">
-          <property name="text">
-           <string>0， 0</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: 2px solid #8f8f91;
+	border-radius: 6px;
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #f6f7fa, stop: 1 #dadbde);
+	min-width: 80px;
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+	border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+	border-color: navy; /* make the default button prominent */
+}
+
+QPushButton:hover{
+background-color:rgba(100,255,100,100);
+border-color:rgba(255,255,255,200);
+color:rgba(0,0,0,200);
+};</string>
+       </property>
+       <property name="text">
+        <string>直线</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="circle_btn">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>84</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: 2px solid #8f8f91;
+	border-radius: 6px;
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #f6f7fa, stop: 1 #dadbde);
+	min-width: 80px;
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+	border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+	border-color: navy; /* make the default button prominent */
+}
+
+QPushButton:hover{
+background-color:rgba(100,255,100,100);
+border-color:rgba(255,255,255,200);
+color:rgba(0,0,0,200);
+};</string>
+       </property>
+       <property name="text">
+        <string>圆</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ruler_length">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>170</y>
+         <width>84</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: 2px solid #8f8f91;
+	border-radius: 6px;
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #f6f7fa, stop: 1 #dadbde);
+	min-width: 80px;
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+	border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+	border-color: navy; /* make the default button prominent */
+}
+
+QPushButton:hover{
+background-color:rgba(100,255,100,100);
+border-color:rgba(255,255,255,200);
+color:rgba(0,0,0,200);
+};</string>
+       </property>
+       <property name="text">
+        <string>刻度尺</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ruler_angle">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>210</y>
+         <width>84</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: 2px solid #8f8f91;
+	border-radius: 6px;
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #f6f7fa, stop: 1 #dadbde);
+	min-width: 80px;
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+	border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+	border-color: navy; /* make the default button prominent */
+}
+
+QPushButton:hover{
+background-color:rgba(100,255,100,100);
+border-color:rgba(255,255,255,200);
+color:rgba(0,0,0,200);
+};</string>
+       </property>
+       <property name="text">
+        <string>量角器</string>
+       </property>
       </widget>
      </widget>
     </item>
@@ -295,7 +559,7 @@
      <x>0</x>
      <y>0</y>
      <width>924</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -315,6 +579,8 @@
    <slots>
     <slot>create_w_line()</slot>
     <slot>create_w_circle()</slot>
+    <slot>create_w_ruler_length()</slot>
+    <slot>create_w_ruler_angle()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -353,8 +619,8 @@
    <slot>set_index_to_line()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>84</y>
+     <x>89</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
      <x>122</x>
@@ -391,6 +657,38 @@
     <hint type="destinationlabel">
      <x>180</x>
      <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ruler_length</sender>
+   <signal>clicked()</signal>
+   <receiver>graphicsView</receiver>
+   <slot>create_w_ruler_length()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>262</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>206</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ruler_angle</sender>
+   <signal>clicked()</signal>
+   <receiver>graphicsView</receiver>
+   <slot>create_w_ruler_angle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
