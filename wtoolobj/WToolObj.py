@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QGraphicsView, QGraphicsScene
 from wgraphicsitem.WGraphicsItem import WGLine
 from wtypes import WToolTypes
 from PyQt5.QtGui import QPainterPath
-from sympy import tan, pi
+from math import pi
 from wmath import geometry
 
 
@@ -62,7 +62,7 @@ class WToolLine(WToolObj):
             pos = self.view.mapToScene(event.pos())
         if event.button() == Qt.LeftButton:
             if self.length != 0:
-                end = geometry.calc_end(pos, self.angle, self.length)
+                end = geometry.calc_p2_from_p1(pos, self.angle, self.length)
                 self._final_item = WGLine(QLineF(pos, end), tmp=False)
                 self.scene.addItem(self._final_item)
                 self.__done()
@@ -87,7 +87,7 @@ class WToolLine(WToolObj):
         pos = self.view.mapToScene(event.pos())
         if self.length != 0:
             self.__destroy_tmp()
-            end = geometry.calc_end(pos, self.angle, self.length)
+            end = geometry.calc_p2_from_p1(pos, self.angle, self.length)
             self._tmp_item = WGLine(QLineF(pos, end), tmp=True)
             self.scene.addItem(self._tmp_item)
             self.scene.update()
@@ -167,6 +167,13 @@ class WToolRulerLength(WToolObj):
             self.scene.addItem(tmp1)
             self.scene.addItem(tmp2)
             self.scene.addItem(tmp3)
+#            arrow1, arrow2 = geometry.calc_line_side_arrow_points(self.start_point, self.end_point, pos)
+#            tmp6 = WGLine(QLineF(self.start_point, arrow1), tmp=True)
+#            tmp7 = WGLine(QLineF(self.start_point, arrow2), tmp=True)
+#            self._tmp_item.append(tmp6)
+#            self._tmp_item.append(tmp7)
+#            self.scene.addItem(tmp6)
+#            self.scene.addItem(tmp7)
 
 
     def __destroy_tmp(self):

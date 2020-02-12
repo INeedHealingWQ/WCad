@@ -5,6 +5,7 @@ from wgraphicsview.WGraphicsScene import WGraphicsScene
 from wtoolobj.WToolObj import WToolLine, WToolCircle, WToolRulerLength
 from Ui.WCadUiFrame import Ui_MainWindow
 
+
 class WGraphicsView(QtWidgets.QGraphicsView):
     def __init__(self, parent: QtWidgets.QWidget, ui: Ui_MainWindow):
         super().__init__()
