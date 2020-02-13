@@ -1,5 +1,5 @@
 from sympy import Line, Point
-from PyQt5.QtCore import QPointF, QLineF
+from PyQt5.QtCore import QPointF, QLineF, QRectF
 from math import tan, atan, sin, asin, cos, acos, degrees, atan2, pi
 
 
@@ -30,7 +30,8 @@ def line_q_to_s(line: QLineF):
 
 
 def calc_angle_from_p1_to_p2(a0: QPointF, a1: QPointF, degree: bool):
-    """ Return the angle from a0 to a1 in radians or degrees(degree = True) """
+    """ Return the angle from a0 to a1 in radians or degrees(degree = True)
+        Return range: -pi ~ pi / -180°~ 180°"""
     dx = a1.x() - a0.x()
     dy = a1.y() - a0.y()
     angle = atan2(dy, dx)
@@ -98,11 +99,32 @@ def calc_prompt_perpendicular_line(p_1: QPointF, p_2: QPointF, p_mouse: QPointF)
 def calc_line_side_arrow_points(p1: QPointF, p2: QPointF, pm: QPointF):
     line = QLineF(p1, p2)
     angle_p12 = calc_angle_from_p1_to_p2(p1, p2, False)
-    angle_p2l = calc_angle_from_p1_to_p2(p2, p1, False)
+    angle_p21 = calc_angle_from_p1_to_p2(p2, p1, False)
     line_p1m = QLineF(p1, pm)
     angle_line_p1m = calc_angle_from_l1_to_l2(line, line_p1m, False)
-    angle_arrow_1 = angle_p12 + pi / 4
-    angle_arrow_2 = angle_p2l - pi / 4
-    if angle_line_p1m > pi:
-        angle_arrow_1, angle_arrow_2 = angle_arrow_2, angle_arrow_1
+    if angle_line_p1m < 0:
+        angle_line_p1m += 2 * pi
+    if angle_line_p1m <= pi:
+        angle_arrow_1 = angle_p12 + pi / 4
+        angle_arrow_2 = angle_p21 - pi / 4
+    else:
+        angle_arrow_1 = angle_p12 - pi / 4
+        angle_arrow_2 = angle_p21 + pi / 4
     return calc_p2_from_p1(p1, angle_arrow_1, 5), calc_p2_from_p1(p2, angle_arrow_2, 5)
+
+
+def calc_bounding_rect_of_common_rect(rect: QRectF):
+    min_x = min(rect.topLeft().x(), rect.topRight().x(),
+                rect.bottomLeft().x(), rect.bottomRight().x())
+    min_y = min(rect.topLeft().y(), rect.topRight().y(),
+                rect.bottomLeft().y(), rect.bottomRight().y())
+    max_x = max(rect.topLeft().x(), rect.topRight().x(),
+                rect.bottomLeft().x(), rect.bottomRight().x())
+    max_y = max(rect.topLeft().y(), rect.topRight().y(),
+                rect.bottomLeft().y(), rect.bottomRight().y())
+    top_left = QPointF(min_x, min_y)
+    bottom_right = QPointF(max_x, max_y)
+    return QRectF(top_left, bottom_right)
+
+
+

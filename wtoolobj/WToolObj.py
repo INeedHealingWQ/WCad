@@ -1,9 +1,9 @@
-from PyQt5.QtCore import Qt, QLineF, QPointF
-from PyQt5.QtGui import QMouseEvent, QTransform
+from PyQt5.QtCore import Qt, QLineF
+from PyQt5.QtGui import QMouseEvent
 from PyQt5.QtWidgets import QGraphicsView, QGraphicsScene
 from wgraphicsitem.WGraphicsItem import WGLine
+from wgraphicsitem.WGraphicsTextItem import WGraphicsTextItem
 from wtypes import WToolTypes
-from PyQt5.QtGui import QPainterPath
 from math import pi
 from wmath import geometry
 
@@ -45,14 +45,13 @@ class WToolCircle(WToolObj):
 
 
 class WToolLine(WToolObj):
-    def __init__(self, view: QGraphicsView, scene: QGraphicsScene, len: float, ang: float):
+    def __init__(self, view: QGraphicsView, scene: QGraphicsScene, l: float, ang: float):
         super(WToolLine, self).__init__(view, scene)
         self.start_point = None
         self.tool_type = WToolTypes.WToolTypes.LINE
 
-        self.length = len
+        self.length = l
         self.angle = (-ang / 180) * pi
-
 
     def mouse_press_event_handler(self, event: QMouseEvent):
         if self.prompt_point is not None:
@@ -121,16 +120,50 @@ class WToolRulerLength(WToolObj):
 
         self.init_flag = False
         self.done_flag = False
+        self.per_prompt_done_flag = False
+        self.baseline_prompt_done_flag = False
+        self.text_done = False
         self.start_point = None
         self.end_point = None
+        ''' in degrees '''
+        self.angle = None
+        self.prompt_baseline = None
+        self.prompt_baseline_p1 = None
+        self.prompt_baseline_p2 = None
+        self.measure_line = None
         self._tmp_item = []
 
     def mouse_press_event_handler(self, event: QMouseEvent):
         pos = self.view.mapToScene(event.pos())
-        if event.button() ==  Qt.LeftButton:
-            if self.done_flag is True:
+        if event.button() == Qt.LeftButton:
+            if self.baseline_prompt_done_flag is True:
+                arrow1, arrow2 = geometry.calc_line_side_arrow_points(
+                    self.prompt_baseline_p1, self.prompt_baseline_p2, pos)
+                arrow_1 = WGLine(QLineF(self.prompt_baseline_p1, arrow1), tmp=True)
+                arrow_2 = WGLine(QLineF(self.prompt_baseline_p2, arrow2), tmp=True)
+                self.scene.addItem(arrow_1)
+                self.scene.addItem(arrow_2)
+                length = '%.3f' % self.measure_line.length()
+                text = length.__str__()
+                length_item = WGraphicsTextItem(text, pos, self.angle)
+                self.scene.addItem(length_item)
+                self.text_done = True
+                self.__done()
+            elif self.per_prompt_done_flag is True:
                 p1, p2 = geometry.calc_baseline(self.start_point, self.end_point, pos)
-                self.scene.addLine(QLineF(p1, p2))
+                self.prompt_baseline = WGLine(QLineF(p1, p2), tmp=False)
+                self.prompt_baseline_p1 = p1
+                self.prompt_baseline_p2 = p2
+                self.scene.addItem(self.prompt_baseline)
+                self.baseline_prompt_done_flag = True
+            elif self.done_flag is True:
+                prompt1, prompt2 = geometry.calc_prompt_perpendicular_line(self.start_point, self.end_point, pos)
+                if prompt1 is not None:
+                    per1 = WGLine(QLineF(self.start_point, prompt1), tmp=False)
+                    per2 = WGLine(QLineF(self.end_point, prompt2), tmp=False)
+                    self.scene.addItem(per1)
+                    self.scene.addItem(per2)
+                    self.per_prompt_done_flag = True
             elif self.init_flag is False:
                 if self.prompt_point is not None:
                     self.start_point = self.prompt_point
@@ -143,16 +176,34 @@ class WToolRulerLength(WToolObj):
                 else:
                     self.end_point = pos
                 self.done_flag = True
+                self.measure_line = QLineF(self.start_point, self.end_point)
+                self.angle = geometry.calc_angle_from_p1_to_p2(self.start_point, self.end_point, True)
 
     def mouse_move_event_handler(self, event: QMouseEvent):
         pos = self.view.mapToScene(event.pos())
-        if self.done_flag is True:
+        if self.text_done is True:
+            self.__destroy_tmp()
+        elif self.baseline_prompt_done_flag is True:
+            self.__destroy_tmp()
+            arrow1, arrow2 = geometry.calc_line_side_arrow_points(self.prompt_baseline_p1, self.prompt_baseline_p2, pos)
+            tmp6 = WGLine(QLineF(self.prompt_baseline_p1, arrow1), tmp=True)
+            tmp7 = WGLine(QLineF(self.prompt_baseline_p2, arrow2), tmp=True)
+            self._tmp_item.append(tmp6)
+            self._tmp_item.append(tmp7)
+            self.scene.addItem(tmp6)
+            self.scene.addItem(tmp7)
+            text = self.measure_line.length().__str__()
+            length_item = WGraphicsTextItem(text, pos, self.angle)
+            self._tmp_item.append(length_item)
+            self.scene.addItem(length_item)
+        elif self.per_prompt_done_flag is True:
             self.__destroy_tmp()
             p1, p2 = geometry.calc_baseline(self.start_point, self.end_point, pos)
             tmp1 = WGLine(QLineF(p1, p2), tmp=True)
-            a1, a2 = geometry.calc_line_side_arrow_points(self.start_point, self.end_point, pos)
-            tmp2 = WGLine(QLineF(self.start_point, a1), tmp=True)
-            tmp3 = WGLine(QLineF(self.end_point, a2), tmp=True)
+            self._tmp_item.append(tmp1)
+            self.scene.addItem(tmp1)
+        elif self.done_flag is True:
+            self.__destroy_tmp()
             prompt1, prompt2 = geometry.calc_prompt_perpendicular_line(self.start_point, self.end_point, pos)
             if prompt1 is not None:
                 tmp4 = WGLine(QLineF(self.start_point, prompt1), tmp=True)
@@ -161,23 +212,16 @@ class WToolRulerLength(WToolObj):
                 self._tmp_item.append(tmp5)
                 self.scene.addItem(tmp4)
                 self.scene.addItem(tmp5)
-            self._tmp_item.append(tmp1)
-            self._tmp_item.append(tmp2)
-            self._tmp_item.append(tmp3)
-            self.scene.addItem(tmp1)
-            self.scene.addItem(tmp2)
-            self.scene.addItem(tmp3)
-#            arrow1, arrow2 = geometry.calc_line_side_arrow_points(self.start_point, self.end_point, pos)
-#            tmp6 = WGLine(QLineF(self.start_point, arrow1), tmp=True)
-#            tmp7 = WGLine(QLineF(self.start_point, arrow2), tmp=True)
-#            self._tmp_item.append(tmp6)
-#            self._tmp_item.append(tmp7)
-#            self.scene.addItem(tmp6)
-#            self.scene.addItem(tmp7)
-
 
     def __destroy_tmp(self):
-        if self._tmp_item != []:
+        if self._tmp_item:
             for i in self._tmp_item:
                 self.scene.removeItem(i)
             self._tmp_item = []
+
+    def __done(self):
+        if self._tmp_item is not None:
+            for i in self._tmp_item:
+                self.scene.removeItem(i)
+        self._tmp_item = self._final_item = None
+        self._done_flag = True

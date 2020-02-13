@@ -2,9 +2,10 @@
 
 # Form implementation generated from reading ui file 'WCadUiFrame.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.1
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -367,7 +368,5 @@ class Ui_MainWindow(object):
         self.circle_btn.setText(_translate("MainWindow", "圆"))
         self.ruler_length.setText(_translate("MainWindow", "刻度尺"))
         self.ruler_angle.setText(_translate("MainWindow", "量角器"))
-
-
 from wgraphicsview.WGraphicsView import WGraphicsView
 from wstackedwidget.WStackedWidget import WStackedWidget
