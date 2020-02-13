@@ -177,7 +177,7 @@ class WToolRulerLength(WToolObj):
                     self.end_point = pos
                 self.done_flag = True
                 self.measure_line = QLineF(self.start_point, self.end_point)
-                self.angle = geometry.calc_angle_from_p1_to_p2(self.start_point, self.end_point, True)
+                self.angle = geometry.calc_angle_from_p1_to_p2(self.start_point, self.end_point, False)
 
     def mouse_move_event_handler(self, event: QMouseEvent):
         pos = self.view.mapToScene(event.pos())

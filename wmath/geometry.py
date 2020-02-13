@@ -1,6 +1,6 @@
 from sympy import Line, Point
 from PyQt5.QtCore import QPointF, QLineF, QRectF
-from math import tan, atan, sin, asin, cos, acos, degrees, atan2, pi
+from math import tan, atan, sin, asin, cos, acos, degrees, atan2, pi, sqrt
 
 
 def point_s_to_q(p: Point):
@@ -113,18 +113,34 @@ def calc_line_side_arrow_points(p1: QPointF, p2: QPointF, pm: QPointF):
     return calc_p2_from_p1(p1, angle_arrow_1, 5), calc_p2_from_p1(p2, angle_arrow_2, 5)
 
 
-def calc_bounding_rect_of_common_rect(rect: QRectF):
-    min_x = min(rect.topLeft().x(), rect.topRight().x(),
-                rect.bottomLeft().x(), rect.bottomRight().x())
-    min_y = min(rect.topLeft().y(), rect.topRight().y(),
-                rect.bottomLeft().y(), rect.bottomRight().y())
-    max_x = max(rect.topLeft().x(), rect.topRight().x(),
-                rect.bottomLeft().x(), rect.bottomRight().x())
-    max_y = max(rect.topLeft().y(), rect.topRight().y(),
-                rect.bottomLeft().y(), rect.bottomRight().y())
-    top_left = QPointF(min_x, min_y)
-    bottom_right = QPointF(max_x, max_y)
+def calc_bounding_rect_of_common_rect(*points: QPointF):
+    x_min = 99999
+    x_max = -99999
+    y_min = 99999
+    y_max = -99999
+    for point in points:
+        x = point.x()
+        y = point.y()
+        if x < x_min:
+            x_min = x
+        if x > x_max:
+            x_max = x
+        if y < y_min:
+            y_min = y
+        if y > y_max:
+            y_max = y
+
+    top_left = QPointF(x_min, y_min)
+    bottom_right = QPointF(x_max, y_max)
     return QRectF(top_left, bottom_right)
 
 
-
+def rotate_points(*points: QPointF, angle_in_rad: float):
+    ret_points = []
+    origin = QPointF(0, 0)
+    for p in points:
+        tmp_l = sqrt(p.x() * p.x() + p.y() * p.y())
+        angle_l = calc_angle_from_p1_to_p2(origin, p, False)
+        angle = angle_l + angle_in_rad
+        ret_points.append(calc_p2_from_p1(origin, angle, tmp_l))
+    return ret_points
