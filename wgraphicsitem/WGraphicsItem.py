@@ -42,6 +42,10 @@ class WGPathItem(QtWidgets.QGraphicsPathItem):
             self._current_color = self._default_color
             self.update()
 
+    def paint(self, painter: QtGui.QPainter, option: 'QStyleOptionGraphicsItem', widget=None):
+        painter.setRenderHint(0x01 | 0x04)
+        super(WGPathItem, self).paint(painter, option)
+
 
 class WGPromptCircle(WGPathItem):
     def __init__(self, pos: QtCore.QPointF, r, tip: str):

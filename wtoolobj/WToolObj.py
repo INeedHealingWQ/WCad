@@ -192,7 +192,7 @@ class WToolRulerLength(WToolObj):
             self._tmp_item.append(tmp7)
             self.scene.addItem(tmp6)
             self.scene.addItem(tmp7)
-            text = self.measure_line.length().__str__()
+            text = '%.03f' % self.measure_line.length()
             length_item = WGraphicsTextItem(text, pos, self.angle)
             self._tmp_item.append(length_item)
             self.scene.addItem(length_item)
