@@ -20,7 +20,8 @@ class WGraphicsScene(QtWidgets.QGraphicsScene):
     def drawBackground(self, painter: QtGui.QPainter, rect: QtCore.QRectF) -> None:
         ret = super(WGraphicsScene, self).drawBackground(painter, rect)
         painter.setOpacity(0.2)
-        axis = [QtCore.QLineF(self.sceneRect().x(), 0, self.sceneRect().width(), 0),
-                QtCore.QLineF(0, self.sceneRect().y(), 0, self.sceneRect().height())]
-        painter.drawLines(axis)
+#        axis = [QtCore.QLineF(self.sceneRect().x(), 0, self.sceneRect().width(), 0),
+#                QtCore.QLineF(0, self.sceneRect().y(), 0, self.sceneRect().height())]
+#        painter.drawLines(axis)
         return ret
+

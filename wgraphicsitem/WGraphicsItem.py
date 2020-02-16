@@ -103,13 +103,15 @@ class WGLine(WGPathItem):
         self.prompt_circle_r = 5
         self.__init_attr()
 
+    def demote_to_tmp(self):
+        self._item_type = WToolTypes.WItemTypes.PROMPT
+
     def dbg_dump_info(self):
         print('start point: ', self.w_line.start_point)
         print('end point: ', self.w_line.end_point)
         print('mid point: ', self.w_line.mid_point)
 
     def __init_attr(self):
-#        self.setFlag(QtWidgets.QGraphicsPathItem.ItemIsMovable)
         self.setFlag(QtWidgets.QGraphicsPathItem.ItemSendsGeometryChanges)
         ''' This is needed for the hover would not disturb prompt items' '''
         self.setAcceptHoverEvents(False)

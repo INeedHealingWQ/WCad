@@ -11,3 +11,4 @@ class WToolTypes:
 class WItemTypes:
     COMMON = 0
     PROMPT = 1
+    PROMPT_TEXT = 2

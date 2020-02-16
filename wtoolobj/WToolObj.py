@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt, QLineF
-from PyQt5.QtGui import QMouseEvent
+from PyQt5.QtGui import QMouseEvent, QPen
 from PyQt5.QtWidgets import QGraphicsView, QGraphicsScene
 from wgraphicsitem.WGraphicsItem import WGLine
 from wgraphicsitem.WGraphicsTextItem import WGraphicsTextItem
@@ -135,6 +135,7 @@ class WToolRulerLength(WToolObj):
 
     def mouse_press_event_handler(self, event: QMouseEvent):
         pos = self.view.mapToScene(event.pos())
+        pen = QPen(Qt.DashLine)
         if event.button() == Qt.LeftButton:
             if self.baseline_prompt_done_flag is True:
                 arrow1, arrow2 = geometry.calc_line_side_arrow_points(
@@ -143,6 +144,8 @@ class WToolRulerLength(WToolObj):
                 arrow_2 = WGLine(QLineF(self.prompt_baseline_p2, arrow2), tmp=True)
                 self.scene.addItem(arrow_1)
                 self.scene.addItem(arrow_2)
+                arrow_1.demote_to_tmp()
+                arrow_2.demote_to_tmp()
                 length = '%.3f' % self.measure_line.length()
                 text = length.__str__()
                 length_item = WGraphicsTextItem(text, pos, self.angle)
@@ -155,6 +158,8 @@ class WToolRulerLength(WToolObj):
                 self.prompt_baseline_p1 = p1
                 self.prompt_baseline_p2 = p2
                 self.scene.addItem(self.prompt_baseline)
+                self.prompt_baseline.setPen(pen)
+                self.prompt_baseline.demote_to_tmp()
                 self.baseline_prompt_done_flag = True
             elif self.done_flag is True:
                 prompt1, prompt2 = geometry.calc_prompt_perpendicular_line(self.start_point, self.end_point, pos)
@@ -163,6 +168,10 @@ class WToolRulerLength(WToolObj):
                     per2 = WGLine(QLineF(self.end_point, prompt2), tmp=False)
                     self.scene.addItem(per1)
                     self.scene.addItem(per2)
+                    per1.demote_to_tmp()
+                    per2.demote_to_tmp()
+                    per1.setPen(pen)
+                    per2.setPen(pen)
                     self.per_prompt_done_flag = True
             elif self.init_flag is False:
                 if self.prompt_point is not None:
@@ -181,6 +190,7 @@ class WToolRulerLength(WToolObj):
 
     def mouse_move_event_handler(self, event: QMouseEvent):
         pos = self.view.mapToScene(event.pos())
+        pen = QPen(Qt.DashLine)
         if self.text_done is True:
             self.__destroy_tmp()
         elif self.baseline_prompt_done_flag is True:
@@ -201,6 +211,7 @@ class WToolRulerLength(WToolObj):
             p1, p2 = geometry.calc_baseline(self.start_point, self.end_point, pos)
             tmp1 = WGLine(QLineF(p1, p2), tmp=True)
             self._tmp_item.append(tmp1)
+            tmp1.setPen(pen)
             self.scene.addItem(tmp1)
         elif self.done_flag is True:
             self.__destroy_tmp()
@@ -210,6 +221,8 @@ class WToolRulerLength(WToolObj):
                 tmp5 = WGLine(QLineF(self.end_point, prompt2), tmp=True)
                 self._tmp_item.append(tmp4)
                 self._tmp_item.append(tmp5)
+                tmp4.setPen(pen)
+                tmp5.setPen(pen)
                 self.scene.addItem(tmp4)
                 self.scene.addItem(tmp5)
 
